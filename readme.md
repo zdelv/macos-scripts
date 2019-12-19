@@ -23,3 +23,5 @@ Drive flashing utility. Given the path to a DMG and dev path to a drive, flash t
   -v, --verbose     Enable verbose output
   --noverify        Do not verify before restoring (just run the script)
 ```
+
+Documentation can be found at: http://zdelvecch.io/notes/work/flashdevice.html
