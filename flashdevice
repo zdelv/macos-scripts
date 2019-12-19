@@ -198,6 +198,32 @@ else
 fi
 echo "---------------------------------------------"
 
+
+########################### REMOUNT DRIVE ########################### 
+
+echo
+echo "---------------------------------------------"
+echo "Remounting drive ${cyan}${bold}"${drive_location}"${normal}${white} . . ."
+
+# Get the disk identifier (number next to /dev/disk#)
+disk_id=$(echo ${drive_location} | grep -o [0-9])
+let disk_id=disk_id+1
+
+# APFS Drives can only be remounted on their data block, not the actual physical block.
+# The data block is always one block further than the physical block
+diskutil mountDisk "/dev/disk${disk_id}"
+
+
+# Check if ASR ended sucessfully or not
+if [[ $? -eq 0 ]]; then
+	echo "${green}${bold}Sucessfully remounted disk!${white}${normal}"
+else
+	echo "${red}${bold}Failed to remount disk!${white}${normal}"
+	echo "${red}${bold}This could mean the restoration actually failed!${white}${normal}"
+	exit 1
+fi
+echo "---------------------------------------------"
+
 ########################### COMPLETE ########################### 
 
 # If you reach here, all went well!
